@@ -1,10 +1,12 @@
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import { useTheme } from '../contexts/ThemeContext';
 
 export default function Sidebar() {
   const navigate = useNavigate();
   const location = useLocation();
   const { profile, logout } = useAuth();
+  const { isDark, toggleTheme } = useTheme();
   const path = location.pathname;
 
   const handleLogout = async () => {
@@ -42,6 +44,13 @@ export default function Sidebar() {
             </div>
           );
         })}
+      </div>
+      <div style={{ padding: '8px 20px', borderTop: '1px solid var(--border)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+        <span style={{ fontSize: 12, color: 'var(--text-muted)' }}>Dark Mode</span>
+        <label className="theme-toggle">
+          <input type="checkbox" checked={isDark} onChange={toggleTheme} />
+          <span className="theme-slider" />
+        </label>
       </div>
       <div className="sb-user" onClick={handleLogout}>
         <div className="sb-avatar">{initials(profile)}</div>
